@@ -10,15 +10,10 @@ public class TitleScreenController : MonoBehaviour { // タイトル画面のコントロー
     [SerializeField] private float moveSpeed= 2f;
     [SerializeField] private float targetY = 0f; // タイトル画像が止まるY座標
 
-    //void Awake() { // Awakeメソッドを追加
-    //    moveSpeed = 2f; // インスペクターの設定値をここで設定
-    //}
-
     private bool isTitleInPosition = false; // タイトルが位置に到達したかどうかのフラグ
 
     void Start() { // スタートメソッド
         pressSpaceImage.SetActive(false); // 初期状態では"Press Space"の画像を非表示
-        //StartCoroutine(BlinkPressSpaceImage()); // "Press Space"の画像を点滅させるコルーチンを開始
     }
 
     void Update() { // 更新メソッド

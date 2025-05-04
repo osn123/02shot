@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
         // 背景画像の高さを取得
-        backgroundHeight = background1.GetComponentInChildren<SpriteRenderer>().bounds.size.y * 4; // 1枚目の背景の高さを取得し、4倍する
+        backgroundHeight = background1.GetComponentInChildren<SpriteRenderer>().bounds.size.y * 4; // TODO: 1枚目の背景の高さを取得し、4倍する
         audioSource = GetComponent<AudioSource>(); // AudioSourceコンポーネントを取得
         PlayBGM(); // BGMを再生
         PlayerPrefs.SetInt("FinalScore",0); // スコアを保存
@@ -103,6 +103,5 @@ public class GameManager : MonoBehaviour {
 
     private void UpdateScoreText() { // スコア表示を更新するメソッド
         scoreText.text = "Score: " + score; // スコアをテキストに反映
-        Debug.Log(scoreText.text);
     }
 }

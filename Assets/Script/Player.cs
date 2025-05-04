@@ -47,7 +47,7 @@ public class Player : MonoBehaviour {
         Vector3 newPosition = transform.position + move; // 現在の位置に移動量を加算
 
         // 画面外に出ないように制限（UI部分を考慮）
-        newPosition.x = Mathf.Clamp(newPosition.x,-screenBounds.x + 0.8f,screenBounds.x - 0.8f - 4.3f); // X座標を画面内に制限
+        newPosition.x = Mathf.Clamp(newPosition.x,-screenBounds.x + 0.8f,screenBounds.x - 0.8f - 4.3f); // TODO:X座標を画面内に制限
         newPosition.y = Mathf.Clamp(newPosition.y,-screenBounds.y + 0.8f,screenBounds.y - 0.8f); // Y座標を画面内に制限
 
         // プレイヤーの位置を更新
@@ -59,10 +59,7 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Z)) // Zキーが押された場合
         {
             Instantiate(bulletPrefab,transform.position,Quaternion.identity); // 弾のプレハブをプレイヤーの位置に生成
-
             audioSource.PlayOneShot(playerShootClip); // プレイヤーの弾撃ちSEを再生
-
-
         }
     }
 
@@ -72,7 +69,6 @@ public class Player : MonoBehaviour {
         {
 
             audioSource.PlayOneShot(playerHitClip); // プレイヤー撃破SEを再生
-
             isDead = true; // 死亡フラグを立てる
             StartCoroutine(HandleDeath()); // 死亡処理をコルーチンで実行
         }
@@ -80,7 +76,8 @@ public class Player : MonoBehaviour {
 
     private IEnumerator HandleDeath() {
         // 爆発エフェクトを生成
-        // Instantiate(explosionPrefab,transform.position,Quaternion.identity); // 爆発エフェクトをプレイヤーの位置に生成
+        // TODO:爆発エフェクトをプレイヤーの位置に生成
+        // Instantiate(explosionPrefab,transform.position,Quaternion.identity); 
 
         // プレイヤーを非表示にする
         //gameObject.SetActive(false); // プレイヤーを非アクティブ化
@@ -89,8 +86,6 @@ public class Player : MonoBehaviour {
         yield return new WaitForSeconds(30f / 60f); // 30フレーム分の時間を待機
 
         // リザルト画面に移行
-        // ここでリザルト画面への遷移処理を記述
-        Debug.Log("リザルト画面に移行"); // デバッグログを出力
         SceneManager.LoadScene("ResultScene"); // ゲームシーンに遷移
     }
 }
