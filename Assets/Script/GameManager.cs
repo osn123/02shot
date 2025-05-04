@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 // ゲーム全体の管理を行うクラス
 public class GameManager : MonoBehaviour {
@@ -7,10 +8,38 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private float scrollSpeed = 2f; // 背景画像のスクロール速度（Inspectorで調整可能）
     private float backgroundHeight; // 背景画像の高さを格納する変数
 
+    public Image scoreImage; // スコアを表示する画像
+    public Text scoreText; // スコアを表示するテキスト
+    private int score = 0; // 現在のスコア
+
+
+    public AudioClip bgmClip; // BGMのクリップ
+    private AudioSource audioSource; // AudioSourceコンポーネント
+    public AudioClip enemyHitClip; // 敵撃破SE
+
+    public static GameManager Instance; // シングルトンインスタンス
+
+    void Awake() {
+        // シングルトンの初期化
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject); // 複数のインスタンスが存在しないようにする
+        }
+    }
+
     void Start() {
         // 背景画像の高さを取得
         backgroundHeight = background1.GetComponentInChildren<SpriteRenderer>().bounds.size.y * 4; // 1枚目の背景の高さを取得し、4倍する
+        audioSource = GetComponent<AudioSource>(); // AudioSourceコンポーネントを取得
+        PlayBGM(); // BGMを再生
+        PlayerPrefs.SetInt("FinalScore",0); // スコアを保存
+
     }
+
+    [SerializeField] private GameObject enemyPrefab; // 敵のプレハブ
+    [SerializeField] private float spawnInterval = 2f; // 敵を生成する間隔
+    private float nextSpawnTime; // 次に敵を生成する時間
 
     void Update() {
         // 毎フレーム、背景画像をスクロールさせる
@@ -20,6 +49,18 @@ public class GameManager : MonoBehaviour {
         // 背景画像が画面外に出た場合、位置をリセットする
         ResetPositionIfNeeded(background1,background2); // 1枚目の背景をリセット
         ResetPositionIfNeeded(background2,background1); // 2枚目の背景をリセット
+
+        // 敵を一定時間ごとに生成
+        if (Time.time >= nextSpawnTime) {
+            SpawnEnemy();
+            nextSpawnTime = Time.time + spawnInterval; // 次の生成時間を設定
+        }
+    }
+
+    void SpawnEnemy() {
+        float randomX = Random.Range(-8f, 8f - 4f); // 画面の幅に応じて調整
+        Vector3 spawnPosition = new Vector3(randomX, 6f, 0f); // Y座標は画面外上部に設定
+        Instantiate(enemyPrefab,spawnPosition,Quaternion.identity); // 敵を生成
     }
 
     void ScrollBackground(GameObject background) {
@@ -43,5 +84,25 @@ public class GameManager : MonoBehaviour {
                 currentBackground.transform.position.z // Z座標はそのまま
             );
         }
+    }
+
+    void PlayBGM() {
+        audioSource.clip = bgmClip; // BGMクリップを設定
+        audioSource.Play(); // BGMを再生
+    }
+
+    public void PlayEnemyHitSound() { // 敵撃破SEを再生するメソッド
+        audioSource.PlayOneShot(enemyHitClip); // 敵撃破SEを再生
+    }
+
+    public void AddScore(int points) { // スコアを加算するメソッド
+        score += points; // スコアを加算
+        UpdateScoreText(); // スコア表示を更新
+        PlayerPrefs.SetInt("FinalScore",score); // スコアを保存
+    }
+
+    private void UpdateScoreText() { // スコア表示を更新するメソッド
+        scoreText.text = "Score: " + score; // スコアをテキストに反映
+        Debug.Log(scoreText.text);
     }
 }
