@@ -25,8 +25,7 @@ public class Enemy : MonoBehaviour {
         // プレイヤーの弾に当たった場合
         if (other.CompareTag("PlayerBullet")) { // 衝突したオブジェクトがプレイヤーの弾か確認
             // 爆発エフェクトを生成
-            // Instantiate(explosionEffect,transform.position,Quaternion.identity); 
-            //// TODO: 爆発エフェクトを生成（コメントアウト中）
+             Instantiate(explosionEffect,transform.position,Quaternion.identity); 
             GameManager.Instance.PlayEnemyHitSound(); // GameManagerで敵撃破SEを再生
             // スコアを+1する
              GameManager.Instance.AddScore(1); // GameManagerのインスタンスを通じてスコアを加算

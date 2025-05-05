@@ -24,6 +24,7 @@ public class TitleScreenController : MonoBehaviour {
 
     void Start() {
         pressSpaceImage.SetActive(false); // 初期状態では"Press Space"の画像を非表示
+        Player.isDead = false; // プレイヤーの死亡状態をリセット
     }
 
     void Update() {

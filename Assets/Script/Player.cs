@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
     public float moveSpeed = 5f; // プレイヤーの移動速度
@@ -12,10 +13,18 @@ public class Player : MonoBehaviour {
     public AudioClip playerShootClip; // プレイヤーの弾撃ちSE
     public AudioClip playerHitClip; // プレイヤー撃破SE
 
-
-    private bool isDead = false; // プレイヤーが死亡しているかどうかを判定するフラグ
+    private bool isResultScreen = false; // 
+    public static bool isDead = false; // プレイヤーが死亡しているかどうかを判定するフラグ
     private AudioSource audioSource; // AudioSourceコンポーネント
 
+    // リザルト画面用のUI要素
+    public GameObject resultPanel; // リザルト画面のパネル
+    public Text resultScoreText; // スコアを表示するテキスト
+    public GameObject pressStartText; // "PRESS START KEY"を表示するテキスト
+
+    private bool isPressStartVisible = true; // "PRESS START KEY"の明滅制御用フラグ
+    private float blinkInterval = 0.5f; // 明滅の間隔
+    private float nextBlinkTime; // 次に明滅を切り替える時間
 
     void Start() {
         // 画面の境界を取得
@@ -25,11 +34,21 @@ public class Player : MonoBehaviour {
 
         // プレイヤーを画面下部中央に配置
         //transform.position = new Vector3(0, -screenBounds.y + 1, 0); // コメントアウトされているが、プレイヤーの初期位置を設定するコード
+        resultPanel.SetActive(false);
+        pressStartText.SetActive(false);
     }
 
     void Update() {
-        if (isDead)
-            return; // プレイヤーが死亡している場合、以降の処理をスキップ
+        if (isResultScreen) {
+            HandleBlinking(); // 明滅処理を実行
+            HandleRestart();  // リスタート処理を実行
+            return;
+        }
+
+        if (isDead) {
+            return;
+        }
+
 
         HandleMovement(); // プレイヤーの移動処理を呼び出す
         HandleShooting(); // プレイヤーの弾発射処理を呼び出す
@@ -67,25 +86,45 @@ public class Player : MonoBehaviour {
         // 当たり判定で死亡処理
         if (!isDead && collision.CompareTag("Enemy")) // プレイヤーが死亡しておらず、敵と衝突した場合
         {
-
             audioSource.PlayOneShot(playerHitClip); // プレイヤー撃破SEを再生
-            isDead = true; // 死亡フラグを立てる
             StartCoroutine(HandleDeath()); // 死亡処理をコルーチンで実行
         }
-    }
+    }　
 
     private IEnumerator HandleDeath() {
         // 爆発エフェクトを生成
-        // TODO:爆発エフェクトをプレイヤーの位置に生成
-        // Instantiate(explosionPrefab,transform.position,Quaternion.identity); 
+        Instantiate(explosionPrefab,transform.position,Quaternion.identity);
 
-        // プレイヤーを非表示にする
-        //gameObject.SetActive(false); // プレイヤーを非アクティブ化
+        isDead = true; // 死亡フラグを立てる
         gameObject.GetComponent<SpriteRenderer>().enabled = false; // スプライトレンダラーを非表示にする
         // 爆発エフェクト終了後30フレーム待機
         yield return new WaitForSeconds(30f / 60f); // 30フレーム分の時間を待機
+        GameManager.Instance.audioSource.enabled = false; //// TODO: AudioSourceを無効化
+        yield return new WaitForSeconds(1f); // 1秒待機
+        ShowResultScreen();
+        yield return new WaitForSeconds(1f); // 1秒待機
+        isResultScreen = true; // 
 
-        // リザルト画面に移行
-        SceneManager.LoadScene("ResultScene"); // ゲームシーンに遷移
+    }
+
+    private void ShowResultScreen() {
+        resultPanel.SetActive(true); // リザルト画面を表示
+        //int finalScore = PlayerPrefs.GetInt("FinalScore", 0); // スコアを取得
+        int finalScore = GameManager.Instance.GetScore(); // GameManagerからスコアを取得
+        resultScoreText.text = "あなたの獲得スコアは: " + finalScore + "点"; // スコアを表示
+    }
+
+    public void HandleBlinking() {
+        if (Time.time >= nextBlinkTime) {
+            isPressStartVisible = !isPressStartVisible;
+            pressStartText.SetActive(isPressStartVisible);
+            nextBlinkTime = Time.time + blinkInterval;
+        }
+    }
+
+    public void HandleRestart() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
+        }
     }
 }

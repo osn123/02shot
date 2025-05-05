@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 
 
     public AudioClip bgmClip; // BGMのクリップ
-    private AudioSource audioSource; // AudioSourceコンポーネント
+    public AudioSource audioSource; // AudioSourceコンポーネント
     public AudioClip enemyHitClip; // 敵撃破SE
 
     public static GameManager Instance; // シングルトンインスタンス
@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour {
         audioSource = GetComponent<AudioSource>(); // AudioSourceコンポーネントを取得
         PlayBGM(); // BGMを再生
         PlayerPrefs.SetInt("FinalScore",0); // スコアを保存
+        //UNDONE
+        //HACK
 
     }
 
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour {
         ResetPositionIfNeeded(background2,background1); // 2枚目の背景をリセット
 
         // 敵を一定時間ごとに生成
-        if (Time.time >= nextSpawnTime) {
+        if (Time.time >= nextSpawnTime && !Player.isDead) {
             SpawnEnemy();
             nextSpawnTime = Time.time + spawnInterval; // 次の生成時間を設定
         }
@@ -98,7 +100,11 @@ public class GameManager : MonoBehaviour {
     public void AddScore(int points) { // スコアを加算するメソッド
         score += points; // スコアを加算
         UpdateScoreText(); // スコア表示を更新
-        PlayerPrefs.SetInt("FinalScore",score); // スコアを保存
+      //  PlayerPrefs.SetInt("FinalScore",score); // スコアを保存
+    }
+
+    public int GetScore() {
+        return score; // スコアを取得するメソッド
     }
 
     private void UpdateScoreText() { // スコア表示を更新するメソッド
