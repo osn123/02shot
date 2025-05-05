@@ -4,47 +4,71 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TitleScreenController : MonoBehaviour { // タイトル画面のコントローラークラス
+public class TitleScreenController : MonoBehaviour {
     public GameObject titleImage; // タイトル画像のGameObject
     public GameObject pressSpaceImage; // "Press Space"の画像のGameObject
-    [SerializeField] private float moveSpeed= 2f;
+    [SerializeField] private float moveSpeed = 2f; // タイトル画像の移動速度
     [SerializeField] private float targetY = 0f; // タイトル画像が止まるY座標
+    [SerializeField] private float blinkInterval = 0.5f; // 明滅の間隔
 
-    private bool isTitleInPosition = false; // タイトルが位置に到達したかどうかのフラグ
+    private float blinkTimer = 0f; // 明滅のタイマー
+    private bool isPressSpaceVisible = true; // "Press Space"の表示状態
 
-    void Start() { // スタートメソッド
+    // ステートの定義
+    private enum TitleState {
+        MovingTitle, // タイトル画像が移動中
+        WaitingForInput, // 入力待ち
+    }
+
+    private TitleState currentState = TitleState.MovingTitle; // 現在のステート
+
+    void Start() {
         pressSpaceImage.SetActive(false); // 初期状態では"Press Space"の画像を非表示
     }
 
-    void Update() { // 更新メソッド
-        if (!isTitleInPosition) { // タイトルが位置に到達していない場合
-            Vector3 currentPosition = titleImage.transform.position; // 現在のタイトル画像の位置を取得
-            if (currentPosition.y > targetY) { // 現在のY座標が目標Y座標より大きい場合
-                currentPosition.y -= moveSpeed * Time.deltaTime; // Y座標を移動速度に基づいて減少
-                titleImage.transform.position = currentPosition; // タイトル画像の位置を更新
-            } else { // 目標位置に到達した場合
-                currentPosition.y = targetY; // Y座標を目標位置に設定
-                titleImage.transform.position = currentPosition; // タイトル画像の位置を更新
-                isTitleInPosition = true; // タイトルが位置に到達したフラグを設定
-                StartCoroutine(BlinkPressSpaceImage()); // "Press Space"の画像を点滅させるコルーチンを開始
-            }
-        } else { // タイトルが位置に到達した場合
-            if (Input.GetKeyDown(KeyCode.Space)) { // スペースキーが押された場合
-                LoadGameScene(); // ゲームシーンを読み込む
-            }
+    void Update() {
+        switch (currentState) {
+            case TitleState.MovingTitle:
+                HandleTitleMovement();
+                break;
+            case TitleState.WaitingForInput:
+                HandleBlinking();
+                HandleInput();
+                break;
+            default:
+                break;
         }
     }
 
-    void LoadGameScene() { // ゲームシーンを読み込むメソッド
+    private void HandleTitleMovement() {
+        Vector3 currentPosition = titleImage.transform.position; // 現在のタイトル画像の位置を取得
+        if (currentPosition.y > targetY) { // 現在のY座標が目標Y座標より大きい場合
+            currentPosition.y -= moveSpeed * Time.deltaTime; // Y座標を移動速度に基づいて減少
+            titleImage.transform.position = currentPosition; // タイトル画像の位置を更新
+        } else { // 目標位置に到達した場合
+            currentPosition.y = targetY; // Y座標を目標位置に設定
+            titleImage.transform.position = currentPosition; // タイトル画像の位置を更新
+            pressSpaceImage.SetActive(true); // "Press Space"の画像を表示
+            currentState = TitleState.WaitingForInput; // ステートを入力待ちに変更
+        }
+    }
+
+    private void HandleBlinking() {
+        blinkTimer += Time.deltaTime; // タイマーを更新
+        if (blinkTimer >= blinkInterval) { // 明滅間隔を超えた場合
+            isPressSpaceVisible = !isPressSpaceVisible; // 表示状態を切り替え
+            pressSpaceImage.SetActive(isPressSpaceVisible); // 表示/非表示を切り替え
+            blinkTimer = 0f; // タイマーをリセット
+        }
+    }
+
+    private void HandleInput() {
+        if (Input.GetKeyDown(KeyCode.Space)) { // スペースキーが押された場合
+            LoadGameScene(); // ゲームシーンを読み込む
+        }
+    }
+
+    private void LoadGameScene() {
         SceneManager.LoadScene("GameScene"); // ゲームシーンに遷移
-    }
-
-    IEnumerator BlinkPressSpaceImage() { // "Press Space"の画像を点滅させるコルーチン
-        while (true) { // 無限ループ
-            pressSpaceImage.SetActive(true); // 画像を表示
-            yield return new WaitForSeconds(0.5f); // 0.5秒待機
-            pressSpaceImage.SetActive(false); // 画像を非表示
-            yield return new WaitForSeconds(0.5f); // 0.5秒待機
-        }
     }
 }

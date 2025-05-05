@@ -105,7 +105,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 0}
   enemyShootClip: {fileID: 8300000, guid: b529a47f758c18341a76b833d28aab5b, type: 3}
-  enemyHitClip: {fileID: 8300000, guid: b529a47f758c18341a76b833d28aab5b, type: 3}
 --- !u!61 &7523527203114621585
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -192,7 +191,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
