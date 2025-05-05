@@ -11,8 +11,7 @@ public class ResultManager : MonoBehaviour {
 
     void Start() {
         // スコアを取得して表示
-        int finalScore = PlayerPrefs.GetInt("FinalScore", 0); // スコアをPlayerPrefsから取得
-        scoreText.text = "あなたの獲得スコアは: " + finalScore + "点"; // スコアをテキストに反映
+        scoreText.text = "あなたの獲得スコアは: " + GameManager.Instance.GetScore() + "点"; // スコアをテキストに反映
 
         // 明滅タイミングの初期化
         nextBlinkTime = Time.time + blinkInterval;

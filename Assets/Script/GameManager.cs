@@ -3,20 +3,24 @@ using UnityEngine.UI;
 
 // ゲーム全体の管理を行うクラス
 public class GameManager : MonoBehaviour {
-    public GameObject background1; // 1枚目の背景画像オブジェクト
-    public GameObject background2; // 2枚目の背景画像オブジェクト
-    [SerializeField] private float scrollSpeed = 2f; // 背景画像のスクロール速度（Inspectorで調整可能）
-    private float backgroundHeight; // 背景画像の高さを格納する変数
 
-    public Image scoreImage; // スコアを表示する画像
-    public Text scoreText; // スコアを表示するテキスト
-    private int score = 0; // 現在のスコア
+    // 背景スクロール関連
+    public GameObject background1; // 1枚目の背景画像
+    public GameObject background2; // 2枚目の背景画像
+    [SerializeField] private float scrollSpeed = 2f; // 背景スクロール速度
+    private float backgroundHeight; // 背景画像の高さ
 
+    // スコア表示関連
+    public Image scoreImage; // スコア画像UI
+    public Text scoreText;   // スコアテキストUI
+    private int score = 0;   // 現在のスコア
 
-    public AudioClip bgmClip; // BGMのクリップ
-    public AudioSource audioSource; // AudioSourceコンポーネント
-    public AudioClip enemyHitClip; // 敵撃破SE
+    // サウンド関連
+    public AudioClip bgmClip;        // BGMクリップ
+    public AudioSource audioSource;  // AudioSource
+    public AudioClip enemyHitClip;   // 敵撃破SE
 
+    // シングルトン
     public static GameManager Instance; // シングルトンインスタンス
 
     void Awake() {
@@ -33,7 +37,6 @@ public class GameManager : MonoBehaviour {
         backgroundHeight = background1.GetComponentInChildren<SpriteRenderer>().bounds.size.y * 4; // TODO: 1枚目の背景の高さを取得し、4倍する
         audioSource = GetComponent<AudioSource>(); // AudioSourceコンポーネントを取得
         PlayBGM(); // BGMを再生
-        PlayerPrefs.SetInt("FinalScore",0); // スコアを保存
         //UNDONE
         //HACK
 
@@ -100,7 +103,6 @@ public class GameManager : MonoBehaviour {
     public void AddScore(int points) { // スコアを加算するメソッド
         score += points; // スコアを加算
         UpdateScoreText(); // スコア表示を更新
-      //  PlayerPrefs.SetInt("FinalScore",score); // スコアを保存
     }
 
     public int GetScore() {

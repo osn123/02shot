@@ -5,26 +5,32 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
-    public float moveSpeed = 5f; // プレイヤーの移動速度
-    public GameObject bulletPrefab; // 弾のプレハブを格納する変数
-    public GameObject explosionPrefab; // 爆発エフェクトのプレハブを格納する変数
-    private Vector2 screenBounds; // 画面の境界を格納する変数
+    // プレイヤーの基本設定
+    public float moveSpeed = 5f;           // 移動速度
+    public GameObject bulletPrefab;        // 弾のプレハブ
+    public GameObject explosionPrefab;     // 爆発エフェクトのプレハブ
 
-    public AudioClip playerShootClip; // プレイヤーの弾撃ちSE
-    public AudioClip playerHitClip; // プレイヤー撃破SE
+    // サウンド
+    public AudioClip playerShootClip;      // 弾発射音
+    public AudioClip playerHitClip;        // 被弾音
+    private AudioSource audioSource;       // オーディオ再生用
 
-    private bool isResultScreen = false; // 
-    public static bool isDead = false; // プレイヤーが死亡しているかどうかを判定するフラグ
-    private AudioSource audioSource; // AudioSourceコンポーネント
+    // 画面制御
+    private Vector2 screenBounds;          // 画面端のワールド座標
 
-    // リザルト画面用のUI要素
-    public GameObject resultPanel; // リザルト画面のパネル
-    public Text resultScoreText; // スコアを表示するテキスト
-    public GameObject pressStartText; // "PRESS START KEY"を表示するテキスト
+    // 状態管理
+    public static bool isDead = false;     // プレイヤー死亡フラグ
+    private bool isResultScreen = false;   // リザルト画面表示中フラグ
 
-    private bool isPressStartVisible = true; // "PRESS START KEY"の明滅制御用フラグ
-    private float blinkInterval = 0.5f; // 明滅の間隔
-    private float nextBlinkTime; // 次に明滅を切り替える時間
+    // リザルト画面UI
+    public GameObject resultPanel;         // リザルトパネル
+    public Text resultScoreText;           // スコア表示テキスト
+    public GameObject pressStartText;      // "PRESS START KEY" テキスト
+
+    // 明滅制御
+    private bool isPressStartVisible = true;
+    private float blinkInterval = 0.5f;
+    private float nextBlinkTime;
 
     void Start() {
         // 画面の境界を取得
@@ -89,7 +95,7 @@ public class Player : MonoBehaviour {
             audioSource.PlayOneShot(playerHitClip); // プレイヤー撃破SEを再生
             StartCoroutine(HandleDeath()); // 死亡処理をコルーチンで実行
         }
-    }　
+    }
 
     private IEnumerator HandleDeath() {
         // 爆発エフェクトを生成
@@ -109,7 +115,6 @@ public class Player : MonoBehaviour {
 
     private void ShowResultScreen() {
         resultPanel.SetActive(true); // リザルト画面を表示
-        //int finalScore = PlayerPrefs.GetInt("FinalScore", 0); // スコアを取得
         int finalScore = GameManager.Instance.GetScore(); // GameManagerからスコアを取得
         resultScoreText.text = "あなたの獲得スコアは: " + finalScore + "点"; // スコアを表示
     }

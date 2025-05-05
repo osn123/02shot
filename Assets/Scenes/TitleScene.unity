@@ -319,6 +319,9 @@ MonoBehaviour:
   pressSpaceImage: {fileID: 1129809675}
   moveSpeed: 3
   targetY: 0
+  blinkInterval: 0.5
+  audioSource: {fileID: 0}
+  StartClip: {fileID: 8300000, guid: 4811a981ebf2ae7469d9c862d4146355, type: 3}
 --- !u!4 &552615713
 Transform:
   m_ObjectHideFlags: 0
