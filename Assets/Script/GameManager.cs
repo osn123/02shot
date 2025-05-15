@@ -147,16 +147,15 @@ public class GameManager : MonoBehaviour
     {
         // 爆発エフェクト終了後30フレーム待機
         yield return new WaitForSeconds(30f / 60f); // 30フレーム分の時間を待機
-        GameManager.Instance.audioSource.enabled = false; //// TODO: AudioSourceを無効化
-        yield return new WaitForSeconds(1f); // 1秒待機
+        audioSource.enabled = false; //// TODO: AudioSourceを無効化
 
         resultPanel.SetActive(true); // リザルト画面を表示
-        GameManager.Instance.scoreText21.text = "あなたの獲得スコアは: "; // スコアをテキストに反映
-        GameManager.Instance.scoreText21.enabled = true;
+        scoreText21.text = "あなたの獲得スコアは: "; // スコアをテキストに反映
+        scoreText21.enabled = true;
 
         yield return new WaitForSeconds(1f); // 1秒待機
-        GameManager.Instance.scoreText22.text = GameManager.Instance.GetScore() + "点"; // スコアをテキストに反映
-        GameManager.Instance.scoreText22.enabled = true;
+        scoreText22.text = GetScore() + "点"; // スコアをテキストに反映
+        scoreText22.enabled = true;
 
         isResultScreen = true; // 
     }
