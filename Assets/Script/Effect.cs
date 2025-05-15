@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
-    int lifetime = 1; // ’e‚Ìƒ‰ƒCƒtƒ^ƒCƒ€i•bj
-    void Start() // ƒXƒ^[ƒgƒƒ\ƒbƒh
+    int lifetime = 1; // å¼¾ã®ãƒ©ã‚¤ãƒ•ã‚¿ã‚¤ãƒ ï¼ˆç§’ï¼‰
+    void Start() // ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ã‚½ãƒƒãƒ‰
     {
-        // ˆê’èŠÔŒã‚É’e‚ğ©“®“I‚É”jŠü
-        Destroy(gameObject,lifetime); // lifetimeŒã‚É’e‚ğ”jŠü
+        // ä¸€å®šæ™‚é–“å¾Œã«å¼¾ã‚’è‡ªå‹•çš„ã«ç ´æ£„
+        Destroy(gameObject,lifetime); // lifetimeå¾Œã«å¼¾ã‚’ç ´æ£„
     }
 }

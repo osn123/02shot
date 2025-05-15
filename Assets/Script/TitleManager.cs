@@ -1,41 +1,41 @@
-using System.Collections;
+ï»¿using System.Collections;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TitleScreenController : MonoBehaviour {
-    [Header("ƒ^ƒCƒgƒ‹‰æ‘œ")]
-    public GameObject titleImage; // ƒ^ƒCƒgƒ‹‰æ‘œ‚ÌGameObject
+    [Header("ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒ")]
+    public GameObject titleImage; // ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒã®GameObject
 
-    [Header("\"Press Space\"‰æ‘œ")]
-    public GameObject pressSpaceImage; // "Press Space"‚Ì‰æ‘œ‚ÌGameObject
+    [Header("\"Press Space\"ç”»åƒ")]
+    public GameObject pressSpaceImage; // "Press Space"ã®ç”»åƒã®GameObject
 
-    [Header("İ’è’l")]
-    [SerializeField] private float moveSpeed = 2f;         // ƒ^ƒCƒgƒ‹‰æ‘œ‚ÌˆÚ“®‘¬“x
-    [SerializeField] private float targetY = 0f;           // ƒ^ƒCƒgƒ‹‰æ‘œ‚ª~‚Ü‚éYÀ•W
-    [SerializeField] private float blinkInterval = 0.5f;   // –¾–Å‚ÌŠÔŠu
+    [Header("è¨­å®šå€¤")]
+    [SerializeField] private float moveSpeed = 2f;         // ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒã®ç§»å‹•é€Ÿåº¦
+    [SerializeField] private float targetY = 0f;           // ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒãŒæ­¢ã¾ã‚‹Yåº§æ¨™
+    [SerializeField] private float blinkInterval = 0.5f;   // æ˜æ»…ã®é–“éš”
 
     private AudioSource audioSource;  // AudioSource
-    public AudioClip StartClip;   // “GŒ‚”jSE
+    public AudioClip StartClip;   // æ•µæ’ƒç ´SE
 
 
 
-    // “à•”•Ï”
-    private float blinkTimer = 0f;             // –¾–Å‚Ìƒ^ƒCƒ}[
-    private bool isPressSpaceVisible = true;   // "Press Space"‚Ì•\¦ó‘Ô
-    // ƒXƒe[ƒg‚Ì’è‹`
+    // å†…éƒ¨å¤‰æ•°
+    private float blinkTimer = 0f;             // æ˜æ»…ã®ã‚¿ã‚¤ãƒãƒ¼
+    private bool isPressSpaceVisible = true;   // "Press Space"ã®è¡¨ç¤ºçŠ¶æ…‹
+    // ã‚¹ãƒ†ãƒ¼ãƒˆã®å®šç¾©
     private enum TitleState {
-        MovingTitle, // ƒ^ƒCƒgƒ‹‰æ‘œ‚ªˆÚ“®’†
-        WaitingForInput, // “ü—Í‘Ò‚¿
+        MovingTitle, // ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒãŒç§»å‹•ä¸­
+        WaitingForInput, // å…¥åŠ›å¾…ã¡
     }
 
-    private TitleState currentState = TitleState.MovingTitle; // Œ»İ‚ÌƒXƒe[ƒg
+    private TitleState currentState = TitleState.MovingTitle; // ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆ
 
     void Start() {
-        audioSource = GetComponent<AudioSource>(); // AudioSourceƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
-        pressSpaceImage.SetActive(false); // ‰Šúó‘Ô‚Å‚Í"Press Space"‚Ì‰æ‘œ‚ğ”ñ•\¦
-        Player.isDead = false; // ƒvƒŒƒCƒ„[‚Ì€–Só‘Ô‚ğƒŠƒZƒbƒg
+        audioSource = GetComponent<AudioSource>(); // AudioSourceã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
+        pressSpaceImage.SetActive(false); // åˆæœŸçŠ¶æ…‹ã§ã¯"Press Space"ã®ç”»åƒã‚’éè¡¨ç¤º
+        Player.isDead = false; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ­»äº¡çŠ¶æ…‹ã‚’ãƒªã‚»ãƒƒãƒˆ
     }
 
     void Update() {
@@ -53,36 +53,36 @@ public class TitleScreenController : MonoBehaviour {
     }
 
     private void HandleTitleMovement() {
-        Vector3 currentPosition = titleImage.transform.position; // Œ»İ‚Ìƒ^ƒCƒgƒ‹‰æ‘œ‚ÌˆÊ’u‚ğæ“¾
-        if (currentPosition.y > targetY) { // Œ»İ‚ÌYÀ•W‚ª–Ú•WYÀ•W‚æ‚è‘å‚«‚¢ê‡
-            currentPosition.y -= moveSpeed * Time.deltaTime; // YÀ•W‚ğˆÚ“®‘¬“x‚ÉŠî‚Ã‚¢‚ÄŒ¸­
-            titleImage.transform.position = currentPosition; // ƒ^ƒCƒgƒ‹‰æ‘œ‚ÌˆÊ’u‚ğXV
-        } else { // –Ú•WˆÊ’u‚É“’B‚µ‚½ê‡
-            currentPosition.y = targetY; // YÀ•W‚ğ–Ú•WˆÊ’u‚Éİ’è
-            titleImage.transform.position = currentPosition; // ƒ^ƒCƒgƒ‹‰æ‘œ‚ÌˆÊ’u‚ğXV
-            pressSpaceImage.SetActive(true); // "Press Space"‚Ì‰æ‘œ‚ğ•\¦
-            currentState = TitleState.WaitingForInput; // ƒXƒe[ƒg‚ğ“ü—Í‘Ò‚¿‚É•ÏX
+        Vector3 currentPosition = titleImage.transform.position; // ç¾åœ¨ã®ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒã®ä½ç½®ã‚’å–å¾—
+        if (currentPosition.y > targetY) { // ç¾åœ¨ã®Yåº§æ¨™ãŒç›®æ¨™Yåº§æ¨™ã‚ˆã‚Šå¤§ãã„å ´åˆ
+            currentPosition.y -= moveSpeed * Time.deltaTime; // Yåº§æ¨™ã‚’ç§»å‹•é€Ÿåº¦ã«åŸºã¥ã„ã¦æ¸›å°‘
+            titleImage.transform.position = currentPosition; // ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒã®ä½ç½®ã‚’æ›´æ–°
+        } else { // ç›®æ¨™ä½ç½®ã«åˆ°é”ã—ãŸå ´åˆ
+            currentPosition.y = targetY; // Yåº§æ¨™ã‚’ç›®æ¨™ä½ç½®ã«è¨­å®š
+            titleImage.transform.position = currentPosition; // ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒã®ä½ç½®ã‚’æ›´æ–°
+            pressSpaceImage.SetActive(true); // "Press Space"ã®ç”»åƒã‚’è¡¨ç¤º
+            currentState = TitleState.WaitingForInput; // ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å…¥åŠ›å¾…ã¡ã«å¤‰æ›´
         }
     }
 
     private void HandleBlinking() {
-        blinkTimer += Time.deltaTime; // ƒ^ƒCƒ}[‚ğXV
-        if (blinkTimer >= blinkInterval) { // –¾–ÅŠÔŠu‚ğ’´‚¦‚½ê‡
-            isPressSpaceVisible = !isPressSpaceVisible; // •\¦ó‘Ô‚ğØ‚è‘Ö‚¦
-            pressSpaceImage.SetActive(isPressSpaceVisible); // •\¦/”ñ•\¦‚ğØ‚è‘Ö‚¦
-            blinkTimer = 0f; // ƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg
+        blinkTimer += Time.deltaTime; // ã‚¿ã‚¤ãƒãƒ¼ã‚’æ›´æ–°
+        if (blinkTimer >= blinkInterval) { // æ˜æ»…é–“éš”ã‚’è¶…ãˆãŸå ´åˆ
+            isPressSpaceVisible = !isPressSpaceVisible; // è¡¨ç¤ºçŠ¶æ…‹ã‚’åˆ‡ã‚Šæ›¿ãˆ
+            pressSpaceImage.SetActive(isPressSpaceVisible); // è¡¨ç¤º/éè¡¨ç¤ºã‚’åˆ‡ã‚Šæ›¿ãˆ
+            blinkTimer = 0f; // ã‚¿ã‚¤ãƒãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆ
         }
     }
 
     private void HandleInput() {
-        if (Input.GetKeyDown(KeyCode.Space)) { // ƒXƒy[ƒXƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
-            StartCoroutine(LoadGameScene()); // ƒQ[ƒ€ƒV[ƒ“‚ğ“Ç‚İ‚Ş
+        if (Input.GetKeyDown(KeyCode.S)) { // ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸå ´åˆ
+            StartCoroutine(LoadGameScene()); // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã‚’èª­ã¿è¾¼ã‚€
         }
     }
 
     private IEnumerator LoadGameScene() {
-        audioSource.PlayOneShot(StartClip); // “GŒ‚”jSE‚ğÄ¶
-        yield return new WaitForSeconds(StartClip.length); // SE‚ÌÄ¶‚ªI‚í‚é‚Ü‚Å‘Ò‹@
-        SceneManager.LoadScene("GameScene"); // ƒQ[ƒ€ƒV[ƒ“‚É‘JˆÚ
+        audioSource.PlayOneShot(StartClip); // æ•µæ’ƒç ´SEã‚’å†ç”Ÿ
+        yield return new WaitForSeconds(StartClip.length); // SEã®å†ç”ŸãŒçµ‚ã‚ã‚‹ã¾ã§å¾…æ©Ÿ
+        SceneManager.LoadScene("GameScene"); // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã«é·ç§»
     }
 }

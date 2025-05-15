@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-// ƒvƒŒƒCƒ„[‚Ì’e‚ğ§Œä‚·‚éƒNƒ‰ƒX
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¼¾ã‚’åˆ¶å¾¡ã™ã‚‹ã‚¯ãƒ©ã‚¹
 public class PlayerBullet : MonoBehaviour {
     [Header("Bullet Settings")]
-    public float speed = 10f; // ’e‚ÌˆÚ“®‘¬“x
-    public float lifetime = 5f; // ’e‚ªÁ–Å‚·‚é‚Ü‚Å‚ÌŠÔ
+    public float speed = 10f; // å¼¾ã®ç§»å‹•é€Ÿåº¦
+    public float lifetime = 5f; // å¼¾ãŒæ¶ˆæ»…ã™ã‚‹ã¾ã§ã®æ™‚é–“
 
     void Start() {
-        // ˆê’èŠÔŒã‚É’e‚ğ©“®“I‚É”jŠü
+        // ä¸€å®šæ™‚é–“å¾Œã«å¼¾ã‚’è‡ªå‹•çš„ã«ç ´æ£„
         Destroy(gameObject,lifetime);
     }
 
     void Update() {
-        // ’e‚ğã•ûŒü‚ÉˆÚ“®
+        // å¼¾ã‚’ä¸Šæ–¹å‘ã«ç§»å‹•
         MoveBullet();
     }
 
@@ -21,10 +21,10 @@ public class PlayerBullet : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        // “G‚ÆÕ“Ë‚µ‚½ê‡‚Ìˆ—
+        // æ•µã¨è¡çªã—ãŸå ´åˆã®å‡¦ç†
         if (collision.CompareTag("Enemy")) {
-            Destroy(gameObject); // ’e‚ğ”jŠü
-            Destroy(collision.gameObject); // “G‚ğ”jŠü
+            Destroy(gameObject); // å¼¾ã‚’ç ´æ£„
+            Destroy(collision.gameObject); // æ•µã‚’ç ´æ£„
         }
     }
 }

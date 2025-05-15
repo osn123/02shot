@@ -33,7 +33,7 @@ public class ResultManager : MonoBehaviour {
 
     private void HandleSceneTransition() {
         // "START"キーが押されたらタイトルシーンに遷移
-        if (Input.GetKeyDown(KeyCode.Space)) { // Spaceキーを"START"キーとして使用
+        if (Input.GetKeyDown(KeyCode.S)) { // Spaceキーを"START"キーとして使用
             SceneManager.LoadScene("TitleScene"); // タイトルシーンに遷移
         }
     }

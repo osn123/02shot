@@ -1,115 +1,115 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
-// ƒQ[ƒ€‘S‘Ì‚ÌŠÇ—‚ğs‚¤ƒNƒ‰ƒX
+// ã‚²ãƒ¼ãƒ å…¨ä½“ã®ç®¡ç†ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹
 public class GameManager : MonoBehaviour {
 
-    // ”wŒiƒXƒNƒ[ƒ‹ŠÖ˜A
-    public GameObject background1; // 1–‡–Ú‚Ì”wŒi‰æ‘œ
-    public GameObject background2; // 2–‡–Ú‚Ì”wŒi‰æ‘œ
-    [SerializeField] private float scrollSpeed = 2f; // ”wŒiƒXƒNƒ[ƒ‹‘¬“x
-    private float backgroundHeight; // ”wŒi‰æ‘œ‚Ì‚‚³
+    // èƒŒæ™¯ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«é–¢é€£
+    public GameObject background1; // 1æšç›®ã®èƒŒæ™¯ç”»åƒ
+    public GameObject background2; // 2æšç›®ã®èƒŒæ™¯ç”»åƒ
+    [SerializeField] private float scrollSpeed = 2f; // èƒŒæ™¯ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«é€Ÿåº¦
+    private float backgroundHeight; // èƒŒæ™¯ç”»åƒã®é«˜ã•
 
-    // ƒXƒRƒA•\¦ŠÖ˜A
-    public Image scoreImage; // ƒXƒRƒA‰æ‘œUI
-    public Text scoreText;   // ƒXƒRƒAƒeƒLƒXƒgUI
-    private int score = 0;   // Œ»İ‚ÌƒXƒRƒA
+    // ã‚¹ã‚³ã‚¢è¡¨ç¤ºé–¢é€£
+    public Image scoreImage; // ã‚¹ã‚³ã‚¢ç”»åƒUI
+    public Text scoreText;   // ã‚¹ã‚³ã‚¢ãƒ†ã‚­ã‚¹ãƒˆUI
+    private int score = 0;   // ç¾åœ¨ã®ã‚¹ã‚³ã‚¢
 
-    // ƒTƒEƒ“ƒhŠÖ˜A
-    public AudioClip bgmClip;        // BGMƒNƒŠƒbƒv
+    // ã‚µã‚¦ãƒ³ãƒ‰é–¢é€£
+    public AudioClip bgmClip;        // BGMã‚¯ãƒªãƒƒãƒ—
     public AudioSource audioSource;  // AudioSource
-    public AudioClip enemyHitClip;   // “GŒ‚”jSE
+    public AudioClip enemyHitClip;   // æ•µæ’ƒç ´SE
 
-    // ƒVƒ“ƒOƒ‹ƒgƒ“
-    public static GameManager Instance; // ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX
+    // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
+    public static GameManager Instance; // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
     void Awake() {
-        // ƒVƒ“ƒOƒ‹ƒgƒ“‚Ì‰Šú‰»
+        // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã®åˆæœŸåŒ–
         if (Instance == null) {
             Instance = this;
         } else {
-            Destroy(gameObject); // •¡”‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ª‘¶İ‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+            Destroy(gameObject); // è¤‡æ•°ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒå­˜åœ¨ã—ãªã„ã‚ˆã†ã«ã™ã‚‹
         }
     }
 
     void Start() {
-        // ”wŒi‰æ‘œ‚Ì‚‚³‚ğæ“¾
-        backgroundHeight = background1.GetComponentInChildren<SpriteRenderer>().bounds.size.y * 4; // TODO: 1–‡–Ú‚Ì”wŒi‚Ì‚‚³‚ğæ“¾‚µA4”{‚·‚é
-        audioSource = GetComponent<AudioSource>(); // AudioSourceƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
-        PlayBGM(); // BGM‚ğÄ¶
+        // èƒŒæ™¯ç”»åƒã®é«˜ã•ã‚’å–å¾—
+        backgroundHeight = background1.GetComponentInChildren<SpriteRenderer>().bounds.size.y * 4; // TODO: 1æšç›®ã®èƒŒæ™¯ã®é«˜ã•ã‚’å–å¾—ã—ã€4å€ã™ã‚‹
+        audioSource = GetComponent<AudioSource>(); // AudioSourceã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
+        PlayBGM(); // BGMã‚’å†ç”Ÿ
         //UNDONE
         //HACK
 
     }
 
-    [SerializeField] private GameObject enemyPrefab; // “G‚ÌƒvƒŒƒnƒu
-    [SerializeField] private float spawnInterval = 2f; // “G‚ğ¶¬‚·‚éŠÔŠu
-    private float nextSpawnTime; // Ÿ‚É“G‚ğ¶¬‚·‚éŠÔ
+    [SerializeField] private GameObject enemyPrefab; // æ•µã®ãƒ—ãƒ¬ãƒãƒ–
+    [SerializeField] private float spawnInterval = 2f; // æ•µã‚’ç”Ÿæˆã™ã‚‹é–“éš”
+    private float nextSpawnTime; // æ¬¡ã«æ•µã‚’ç”Ÿæˆã™ã‚‹æ™‚é–“
 
     void Update() {
-        // –ˆƒtƒŒ[ƒ€A”wŒi‰æ‘œ‚ğƒXƒNƒ[ƒ‹‚³‚¹‚é
-        ScrollBackground(background1); // 1–‡–Ú‚Ì”wŒi‚ğƒXƒNƒ[ƒ‹
-        ScrollBackground(background2); // 2–‡–Ú‚Ì”wŒi‚ğƒXƒNƒ[ƒ‹
+        // æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã€èƒŒæ™¯ç”»åƒã‚’ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã•ã›ã‚‹
+        ScrollBackground(background1); // 1æšç›®ã®èƒŒæ™¯ã‚’ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
+        ScrollBackground(background2); // 2æšç›®ã®èƒŒæ™¯ã‚’ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 
-        // ”wŒi‰æ‘œ‚ª‰æ–ÊŠO‚Éo‚½ê‡AˆÊ’u‚ğƒŠƒZƒbƒg‚·‚é
-        ResetPositionIfNeeded(background1,background2); // 1–‡–Ú‚Ì”wŒi‚ğƒŠƒZƒbƒg
-        ResetPositionIfNeeded(background2,background1); // 2–‡–Ú‚Ì”wŒi‚ğƒŠƒZƒbƒg
+        // èƒŒæ™¯ç”»åƒãŒç”»é¢å¤–ã«å‡ºãŸå ´åˆã€ä½ç½®ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
+        ResetPositionIfNeeded(background1,background2); // 1æšç›®ã®èƒŒæ™¯ã‚’ãƒªã‚»ãƒƒãƒˆ
+        ResetPositionIfNeeded(background2,background1); // 2æšç›®ã®èƒŒæ™¯ã‚’ãƒªã‚»ãƒƒãƒˆ
 
-        // “G‚ğˆê’èŠÔ‚²‚Æ‚É¶¬
+        // æ•µã‚’ä¸€å®šæ™‚é–“ã”ã¨ã«ç”Ÿæˆ
         if (Time.time >= nextSpawnTime && !Player.isDead) {
             SpawnEnemy();
-            nextSpawnTime = Time.time + spawnInterval; // Ÿ‚Ì¶¬ŠÔ‚ğİ’è
+            nextSpawnTime = Time.time + spawnInterval; // æ¬¡ã®ç”Ÿæˆæ™‚é–“ã‚’è¨­å®š
         }
     }
 
     void SpawnEnemy() {
-        float randomX = Random.Range(-8f, 8f - 4f); // ‰æ–Ê‚Ì•‚É‰‚¶‚Ä’²®
-        Vector3 spawnPosition = new Vector3(randomX, 6f, 0f); // YÀ•W‚Í‰æ–ÊŠOã•”‚Éİ’è
-        Instantiate(enemyPrefab,spawnPosition,Quaternion.identity); // “G‚ğ¶¬
+        float randomX = Random.Range(-8f, 8f - 4f); // ç”»é¢ã®å¹…ã«å¿œã˜ã¦èª¿æ•´
+        Vector3 spawnPosition = new Vector3(randomX, 6f, 0f); // Yåº§æ¨™ã¯ç”»é¢å¤–ä¸Šéƒ¨ã«è¨­å®š
+        Instantiate(enemyPrefab,spawnPosition,Quaternion.identity); // æ•µã‚’ç”Ÿæˆ
     }
 
     void ScrollBackground(GameObject background) {
-        // Œ»İ‚ÌˆÊ’u‚ğæ“¾
+        // ç¾åœ¨ã®ä½ç½®ã‚’å–å¾—
         Vector3 position = background.transform.position;
 
-        // ‰º•ûŒü‚ÉˆÚ“®iƒXƒNƒ[ƒ‹‘¬“x‚É‰‚¶‚ÄˆÚ“®—Ê‚ğŒvZj
-        position.y -= scrollSpeed * Time.deltaTime; // ƒXƒNƒ[ƒ‹‘¬“x‚ÉŠî‚Ã‚¢‚ÄYÀ•W‚ğŒ¸­‚³‚¹‚é
+        // ä¸‹æ–¹å‘ã«ç§»å‹•ï¼ˆã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«é€Ÿåº¦ã«å¿œã˜ã¦ç§»å‹•é‡ã‚’è¨ˆç®—ï¼‰
+        position.y -= scrollSpeed * Time.deltaTime; // ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«é€Ÿåº¦ã«åŸºã¥ã„ã¦Yåº§æ¨™ã‚’æ¸›å°‘ã•ã›ã‚‹
 
-        // ŒvZ‚µ‚½ˆÊ’u‚ğ”wŒiƒIƒuƒWƒFƒNƒg‚É“K—p
-        background.transform.position = position; // V‚µ‚¢ˆÊ’u‚ğ”wŒiƒIƒuƒWƒFƒNƒg‚Éİ’è
+        // è¨ˆç®—ã—ãŸä½ç½®ã‚’èƒŒæ™¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«é©ç”¨
+        background.transform.position = position; // æ–°ã—ã„ä½ç½®ã‚’èƒŒæ™¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«è¨­å®š
     }
 
     void ResetPositionIfNeeded(GameObject currentBackground,GameObject otherBackground) {
-        // Œ»İ‚Ì”wŒi‚ª‰æ–ÊŠOi-backgroundHeightˆÈ‰ºj‚Éo‚½ê‡
+        // ç¾åœ¨ã®èƒŒæ™¯ãŒç”»é¢å¤–ï¼ˆ-backgroundHeightä»¥ä¸‹ï¼‰ã«å‡ºãŸå ´åˆ
         if (currentBackground.transform.position.y <= -backgroundHeight) {
-            // ‚à‚¤ˆê•û‚Ì”wŒi‚Ìã‚ÉŒ»İ‚Ì”wŒi‚ğˆÚ“®‚³‚¹‚é
+            // ã‚‚ã†ä¸€æ–¹ã®èƒŒæ™¯ã®ä¸Šã«ç¾åœ¨ã®èƒŒæ™¯ã‚’ç§»å‹•ã•ã›ã‚‹
             currentBackground.transform.position = new Vector3(
-                currentBackground.transform.position.x, // XÀ•W‚Í‚»‚Ì‚Ü‚Ü
-                otherBackground.transform.position.y + backgroundHeight, // YÀ•W‚ğ‚à‚¤ˆê•û‚Ì”wŒi‚Ìã‚Éİ’è
-                currentBackground.transform.position.z // ZÀ•W‚Í‚»‚Ì‚Ü‚Ü
+                currentBackground.transform.position.x, // Xåº§æ¨™ã¯ãã®ã¾ã¾
+                otherBackground.transform.position.y + backgroundHeight, // Yåº§æ¨™ã‚’ã‚‚ã†ä¸€æ–¹ã®èƒŒæ™¯ã®ä¸Šã«è¨­å®š
+                currentBackground.transform.position.z // Zåº§æ¨™ã¯ãã®ã¾ã¾
             );
         }
     }
 
     void PlayBGM() {
-        audioSource.clip = bgmClip; // BGMƒNƒŠƒbƒv‚ğİ’è
-        audioSource.Play(); // BGM‚ğÄ¶
+        audioSource.clip = bgmClip; // BGMã‚¯ãƒªãƒƒãƒ—ã‚’è¨­å®š
+        audioSource.Play(); // BGMã‚’å†ç”Ÿ
     }
 
-    public void PlayEnemyHitSound() { // “GŒ‚”jSE‚ğÄ¶‚·‚éƒƒ\ƒbƒh
-        audioSource.PlayOneShot(enemyHitClip); // “GŒ‚”jSE‚ğÄ¶
+    public void PlayEnemyHitSound() { // æ•µæ’ƒç ´SEã‚’å†ç”Ÿã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+        audioSource.PlayOneShot(enemyHitClip); // æ•µæ’ƒç ´SEã‚’å†ç”Ÿ
     }
 
-    public void AddScore(int points) { // ƒXƒRƒA‚ğ‰ÁZ‚·‚éƒƒ\ƒbƒh
-        score += points; // ƒXƒRƒA‚ğ‰ÁZ
-        UpdateScoreText(); // ƒXƒRƒA•\¦‚ğXV
+    public void AddScore(int points) { // ã‚¹ã‚³ã‚¢ã‚’åŠ ç®—ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+        score += points; // ã‚¹ã‚³ã‚¢ã‚’åŠ ç®—
+        UpdateScoreText(); // ã‚¹ã‚³ã‚¢è¡¨ç¤ºã‚’æ›´æ–°
     }
 
     public int GetScore() {
-        return score; // ƒXƒRƒA‚ğæ“¾‚·‚éƒƒ\ƒbƒh
+        return score; // ã‚¹ã‚³ã‚¢ã‚’å–å¾—ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     }
 
-    private void UpdateScoreText() { // ƒXƒRƒA•\¦‚ğXV‚·‚éƒƒ\ƒbƒh
-        scoreText.text = "Score: " + score; // ƒXƒRƒA‚ğƒeƒLƒXƒg‚É”½‰f
+    private void UpdateScoreText() { // ã‚¹ã‚³ã‚¢è¡¨ç¤ºã‚’æ›´æ–°ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+        scoreText.text = "Score: " + score; // ã‚¹ã‚³ã‚¢ã‚’ãƒ†ã‚­ã‚¹ãƒˆã«åæ˜ 
     }
 }

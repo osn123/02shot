@@ -1,53 +1,53 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
-    // ƒvƒŒƒCƒ„[‚ÌŠî–{İ’è
-    public float moveSpeed = 5f;           // ˆÚ“®‘¬“x
-    public GameObject bulletPrefab;        // ’e‚ÌƒvƒŒƒnƒu
-    public GameObject explosionPrefab;     // ”š”­ƒGƒtƒFƒNƒg‚ÌƒvƒŒƒnƒu
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åŸºæœ¬è¨­å®š
+    public float moveSpeed = 5f;           // ç§»å‹•é€Ÿåº¦
+    public GameObject bulletPrefab;        // å¼¾ã®ãƒ—ãƒ¬ãƒãƒ–
+    public GameObject explosionPrefab;     // çˆ†ç™ºã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ¬ãƒãƒ–
 
-    // ƒTƒEƒ“ƒh
-    public AudioClip playerShootClip;      // ’e”­Ë‰¹
-    public AudioClip playerHitClip;        // ”í’e‰¹
-    private AudioSource audioSource;       // ƒI[ƒfƒBƒIÄ¶—p
+    // ã‚µã‚¦ãƒ³ãƒ‰
+    public AudioClip playerShootClip;      // å¼¾ç™ºå°„éŸ³
+    public AudioClip playerHitClip;        // è¢«å¼¾éŸ³
+    private AudioSource audioSource;       // ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªå†ç”Ÿç”¨
 
-    // ‰æ–Ê§Œä
-    private Vector2 screenBounds;          // ‰æ–Ê’[‚Ìƒ[ƒ‹ƒhÀ•W
+    // ç”»é¢åˆ¶å¾¡
+    private Vector2 screenBounds;          // ç”»é¢ç«¯ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
 
-    // ó‘ÔŠÇ—
-    public static bool isDead = false;     // ƒvƒŒƒCƒ„[€–Sƒtƒ‰ƒO
-    private bool isResultScreen = false;   // ƒŠƒUƒ‹ƒg‰æ–Ê•\¦’†ƒtƒ‰ƒO
+    // çŠ¶æ…‹ç®¡ç†
+    public static bool isDead = false;     // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ­»äº¡ãƒ•ãƒ©ã‚°
+    private bool isResultScreen = false;   // ãƒªã‚¶ãƒ«ãƒˆç”»é¢è¡¨ç¤ºä¸­ãƒ•ãƒ©ã‚°
 
-    // ƒŠƒUƒ‹ƒg‰æ–ÊUI
-    public GameObject resultPanel;         // ƒŠƒUƒ‹ƒgƒpƒlƒ‹
-    public Text resultScoreText;           // ƒXƒRƒA•\¦ƒeƒLƒXƒg
-    public GameObject pressStartText;      // "PRESS START KEY" ƒeƒLƒXƒg
+    // ãƒªã‚¶ãƒ«ãƒˆç”»é¢UI
+    public GameObject resultPanel;         // ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«
+    public Text resultScoreText;           // ã‚¹ã‚³ã‚¢è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆ
+    public GameObject pressStartText;      // "PRESS START KEY" ãƒ†ã‚­ã‚¹ãƒˆ
 
-    // –¾–Å§Œä
+    // æ˜æ»…åˆ¶å¾¡
     private bool isPressStartVisible = true;
     private float blinkInterval = 0.5f;
     private float nextBlinkTime;
 
     void Start() {
-        // ‰æ–Ê‚Ì‹«ŠE‚ğæ“¾
-        Camera mainCamera = Camera.main; // ƒƒCƒ“ƒJƒƒ‰‚ğæ“¾
-        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width,Screen.height,mainCamera.transform.position.z)); // ‰æ–Ê‚Ì’[‚Ìƒ[ƒ‹ƒhÀ•W‚ğŒvZ
-        audioSource = GetComponent<AudioSource>(); // AudioSourceƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        // ç”»é¢ã®å¢ƒç•Œã‚’å–å¾—
+        Camera mainCamera = Camera.main; // ãƒ¡ã‚¤ãƒ³ã‚«ãƒ¡ãƒ©ã‚’å–å¾—
+        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width,Screen.height,mainCamera.transform.position.z)); // ç”»é¢ã®ç«¯ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’è¨ˆç®—
+        audioSource = GetComponent<AudioSource>(); // AudioSourceã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
 
-        // ƒvƒŒƒCƒ„[‚ğ‰æ–Ê‰º•”’†‰›‚É”z’u
-        //transform.position = new Vector3(0, -screenBounds.y + 1, 0); // ƒRƒƒ“ƒgƒAƒEƒg‚³‚ê‚Ä‚¢‚é‚ªAƒvƒŒƒCƒ„[‚Ì‰ŠúˆÊ’u‚ğİ’è‚·‚éƒR[ƒh
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç”»é¢ä¸‹éƒ¨ä¸­å¤®ã«é…ç½®
+        //transform.position = new Vector3(0, -screenBounds.y + 1, 0); // ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã•ã‚Œã¦ã„ã‚‹ãŒã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åˆæœŸä½ç½®ã‚’è¨­å®šã™ã‚‹ã‚³ãƒ¼ãƒ‰
         resultPanel.SetActive(false);
         pressStartText.SetActive(false);
     }
 
     void Update() {
         if (isResultScreen) {
-            HandleBlinking(); // –¾–Åˆ—‚ğÀs
-            HandleRestart();  // ƒŠƒXƒ^[ƒgˆ—‚ğÀs
+            HandleBlinking(); // æ˜æ»…å‡¦ç†ã‚’å®Ÿè¡Œ
+            HandleRestart();  // ãƒªã‚¹ã‚¿ãƒ¼ãƒˆå‡¦ç†ã‚’å®Ÿè¡Œ
             return;
         }
 
@@ -56,67 +56,67 @@ public class Player : MonoBehaviour {
         }
 
 
-        HandleMovement(); // ƒvƒŒƒCƒ„[‚ÌˆÚ“®ˆ—‚ğŒÄ‚Ño‚·
-        HandleShooting(); // ƒvƒŒƒCƒ„[‚Ì’e”­Ëˆ—‚ğŒÄ‚Ño‚·
+        HandleMovement(); // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•å‡¦ç†ã‚’å‘¼ã³å‡ºã™
+        HandleShooting(); // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¼¾ç™ºå°„å‡¦ç†ã‚’å‘¼ã³å‡ºã™
     }
 
     void HandleMovement() {
-        // “ü—Íæ“¾
-        float moveX = Input.GetAxis("Horizontal"); // …•½•ûŒü‚Ì“ü—Í‚ğæ“¾
-        float moveY = Input.GetAxis("Vertical"); // ‚’¼•ûŒü‚Ì“ü—Í‚ğæ“¾
+        // å…¥åŠ›å–å¾—
+        float moveX = Input.GetAxis("Horizontal"); // æ°´å¹³æ–¹å‘ã®å…¥åŠ›ã‚’å–å¾—
+        float moveY = Input.GetAxis("Vertical"); // å‚ç›´æ–¹å‘ã®å…¥åŠ›ã‚’å–å¾—
 
-        // ˆÚ“®ŒvZ
-        Vector3 move = new Vector3(moveX, moveY, 0).normalized * moveSpeed * Time.deltaTime; // “ü—Í‚ÉŠî‚Ã‚¢‚ÄˆÚ“®—Ê‚ğŒvZ
+        // ç§»å‹•è¨ˆç®—
+        Vector3 move = new Vector3(moveX, moveY, 0).normalized * moveSpeed * Time.deltaTime; // å…¥åŠ›ã«åŸºã¥ã„ã¦ç§»å‹•é‡ã‚’è¨ˆç®—
 
-        // V‚µ‚¢ˆÊ’u‚ğŒvZ
-        Vector3 newPosition = transform.position + move; // Œ»İ‚ÌˆÊ’u‚ÉˆÚ“®—Ê‚ğ‰ÁZ
+        // æ–°ã—ã„ä½ç½®ã‚’è¨ˆç®—
+        Vector3 newPosition = transform.position + move; // ç¾åœ¨ã®ä½ç½®ã«ç§»å‹•é‡ã‚’åŠ ç®—
 
-        // ‰æ–ÊŠO‚Éo‚È‚¢‚æ‚¤‚É§ŒÀiUI•”•ª‚ğl—¶j
-        newPosition.x = Mathf.Clamp(newPosition.x,-screenBounds.x + 0.8f,screenBounds.x - 0.8f - 4.3f); // TODO:XÀ•W‚ğ‰æ–Ê“à‚É§ŒÀ
-        newPosition.y = Mathf.Clamp(newPosition.y,-screenBounds.y + 0.8f,screenBounds.y - 0.8f); // YÀ•W‚ğ‰æ–Ê“à‚É§ŒÀ
+        // ç”»é¢å¤–ã«å‡ºãªã„ã‚ˆã†ã«åˆ¶é™ï¼ˆUIéƒ¨åˆ†ã‚’è€ƒæ…®ï¼‰
+        newPosition.x = Mathf.Clamp(newPosition.x,-screenBounds.x + 0.8f,screenBounds.x - 0.8f - 4.3f); // TODO:Xåº§æ¨™ã‚’ç”»é¢å†…ã«åˆ¶é™
+        newPosition.y = Mathf.Clamp(newPosition.y,-screenBounds.y + 0.8f,screenBounds.y - 0.8f); // Yåº§æ¨™ã‚’ç”»é¢å†…ã«åˆ¶é™
 
-        // ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğXV
-        transform.position = newPosition; // ŒvZ‚µ‚½ˆÊ’u‚ğƒvƒŒƒCƒ„[‚É“K—p
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã‚’æ›´æ–°
+        transform.position = newPosition; // è¨ˆç®—ã—ãŸä½ç½®ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«é©ç”¨
     }
 
     void HandleShooting() {
-        // ZƒL[‚Å’e‚ğ”­Ë
-        if (Input.GetKeyDown(KeyCode.Z)) // ZƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
+        // Zã‚­ãƒ¼ã§å¼¾ã‚’ç™ºå°„
+        if (Input.GetKeyDown(KeyCode.Z)) // Zã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸå ´åˆ
         {
-            Instantiate(bulletPrefab,transform.position,Quaternion.identity); // ’e‚ÌƒvƒŒƒnƒu‚ğƒvƒŒƒCƒ„[‚ÌˆÊ’u‚É¶¬
-            audioSource.PlayOneShot(playerShootClip); // ƒvƒŒƒCƒ„[‚Ì’eŒ‚‚¿SE‚ğÄ¶
+            Instantiate(bulletPrefab,transform.position,Quaternion.identity); // å¼¾ã®ãƒ—ãƒ¬ãƒãƒ–ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã«ç”Ÿæˆ
+            audioSource.PlayOneShot(playerShootClip); // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¼¾æ’ƒã¡SEã‚’å†ç”Ÿ
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        // “–‚½‚è”»’è‚Å€–Sˆ—
-        if (!isDead && collision.CompareTag("Enemy")) // ƒvƒŒƒCƒ„[‚ª€–S‚µ‚Ä‚¨‚ç‚¸A“G‚ÆÕ“Ë‚µ‚½ê‡
+        // å½“ãŸã‚Šåˆ¤å®šã§æ­»äº¡å‡¦ç†
+        if (!isDead && collision.CompareTag("Enemy")) // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ­»äº¡ã—ã¦ãŠã‚‰ãšã€æ•µã¨è¡çªã—ãŸå ´åˆ
         {
-            audioSource.PlayOneShot(playerHitClip); // ƒvƒŒƒCƒ„[Œ‚”jSE‚ğÄ¶
-            StartCoroutine(HandleDeath()); // €–Sˆ—‚ğƒRƒ‹[ƒ`ƒ“‚ÅÀs
+            audioSource.PlayOneShot(playerHitClip); // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ’ƒç ´SEã‚’å†ç”Ÿ
+            StartCoroutine(HandleDeath()); // æ­»äº¡å‡¦ç†ã‚’ã‚³ãƒ«ãƒ¼ãƒãƒ³ã§å®Ÿè¡Œ
         }
     }
 
     private IEnumerator HandleDeath() {
-        // ”š”­ƒGƒtƒFƒNƒg‚ğ¶¬
+        // çˆ†ç™ºã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
         Instantiate(explosionPrefab,transform.position,Quaternion.identity);
 
-        isDead = true; // €–Sƒtƒ‰ƒO‚ğ—§‚Ä‚é
-        gameObject.GetComponent<SpriteRenderer>().enabled = false; // ƒXƒvƒ‰ƒCƒgƒŒƒ“ƒ_ƒ‰[‚ğ”ñ•\¦‚É‚·‚é
-        // ”š”­ƒGƒtƒFƒNƒgI—¹Œã30ƒtƒŒ[ƒ€‘Ò‹@
-        yield return new WaitForSeconds(30f / 60f); // 30ƒtƒŒ[ƒ€•ª‚ÌŠÔ‚ğ‘Ò‹@
-        GameManager.Instance.audioSource.enabled = false; //// TODO: AudioSource‚ğ–³Œø‰»
-        yield return new WaitForSeconds(1f); // 1•b‘Ò‹@
+        isDead = true; // æ­»äº¡ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+        gameObject.GetComponent<SpriteRenderer>().enabled = false; // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚’éè¡¨ç¤ºã«ã™ã‚‹
+        // çˆ†ç™ºã‚¨ãƒ•ã‚§ã‚¯ãƒˆçµ‚äº†å¾Œ30ãƒ•ãƒ¬ãƒ¼ãƒ å¾…æ©Ÿ
+        yield return new WaitForSeconds(30f / 60f); // 30ãƒ•ãƒ¬ãƒ¼ãƒ åˆ†ã®æ™‚é–“ã‚’å¾…æ©Ÿ
+        GameManager.Instance.audioSource.enabled = false; //// TODO: AudioSourceã‚’ç„¡åŠ¹åŒ–
+        yield return new WaitForSeconds(1f); // 1ç§’å¾…æ©Ÿ
         ShowResultScreen();
-        yield return new WaitForSeconds(1f); // 1•b‘Ò‹@
+        yield return new WaitForSeconds(1f); // 1ç§’å¾…æ©Ÿ
         isResultScreen = true; // 
 
     }
 
     private void ShowResultScreen() {
-        resultPanel.SetActive(true); // ƒŠƒUƒ‹ƒg‰æ–Ê‚ğ•\¦
-        int finalScore = GameManager.Instance.GetScore(); // GameManager‚©‚çƒXƒRƒA‚ğæ“¾
-        resultScoreText.text = "‚ ‚È‚½‚ÌŠl“¾ƒXƒRƒA‚Í: " + finalScore + "“_"; // ƒXƒRƒA‚ğ•\¦
+        resultPanel.SetActive(true); // ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã‚’è¡¨ç¤º
+        int finalScore = GameManager.Instance.GetScore(); // GameManagerã‹ã‚‰ã‚¹ã‚³ã‚¢ã‚’å–å¾—
+        resultScoreText.text = "ã‚ãªãŸã®ç²å¾—ã‚¹ã‚³ã‚¢ã¯: " + finalScore + "ç‚¹"; // ã‚¹ã‚³ã‚¢ã‚’è¡¨ç¤º
     }
 
     public void HandleBlinking() {
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
     }
 
     public void HandleRestart() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.S)) {
             UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
         }
     }
