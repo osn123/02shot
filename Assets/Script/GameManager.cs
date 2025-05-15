@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     // スコア表示関連
     public Image scoreImage; // スコア画像UI
     public Text scoreText;   // スコアテキストUI
+    public Text scoreText21;   // スコアテキストUI
+    public Text scoreText22;   // スコアテキストUI
     private int score = 0;   // 現在のスコア
 
     // サウンド関連

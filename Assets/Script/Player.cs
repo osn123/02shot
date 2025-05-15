@@ -42,6 +42,9 @@ public class Player : MonoBehaviour {
         //transform.position = new Vector3(0, -screenBounds.y + 1, 0); // コメントアウトされているが、プレイヤーの初期位置を設定するコード
         resultPanel.SetActive(false);
         pressStartText.SetActive(false);
+
+        GameManager.Instance.scoreText21.enabled = false;
+        GameManager.Instance.scoreText22.enabled = false;
     }
 
     void Update() {
@@ -107,8 +110,15 @@ public class Player : MonoBehaviour {
         yield return new WaitForSeconds(30f / 60f); // 30フレーム分の時間を待機
         GameManager.Instance.audioSource.enabled = false; //// TODO: AudioSourceを無効化
         yield return new WaitForSeconds(1f); // 1秒待機
-        ShowResultScreen();
+
+        resultPanel.SetActive(true); // リザルト画面を表示
+        GameManager.Instance.scoreText21.text = "あなたの獲得スコアは: " ; // スコアをテキストに反映
+        GameManager.Instance.scoreText21.enabled = true;
+
         yield return new WaitForSeconds(1f); // 1秒待機
+        GameManager.Instance.scoreText22.text = GameManager.Instance.GetScore() + "点"; // スコアをテキストに反映
+        GameManager.Instance.scoreText22.enabled = true;
+
         isResultScreen = true; // 
 
     }

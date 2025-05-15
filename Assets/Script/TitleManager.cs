@@ -5,13 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TitleScreenController : MonoBehaviour {
-    [Header("タイトル画像")]
     public GameObject titleImage; // タイトル画像のGameObject
 
-    [Header("\"Press Space\"画像")]
     public GameObject pressSpaceImage; // "Press Space"の画像のGameObject
 
-    [Header("設定値")]
     [SerializeField] private float moveSpeed = 2f;         // タイトル画像の移動速度
     [SerializeField] private float targetY = 0f;           // タイトル画像が止まるY座標
     [SerializeField] private float blinkInterval = 0.5f;   // 明滅の間隔
@@ -85,7 +82,7 @@ public class TitleScreenController : MonoBehaviour {
     }
 
     private IEnumerator LoadGameScene() {
-        audioSource.PlayOneShot(StartClip); // 敵撃破SEを再生
+        audioSource.PlayOneShot(StartClip); // SEを再生
         yield return new WaitForSeconds(StartClip.length); // SEの再生が終わるまで待機
         SceneManager.LoadScene("GameScene"); // ゲームシーンに遷移
     }
