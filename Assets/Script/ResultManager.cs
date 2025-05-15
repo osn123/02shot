@@ -17,7 +17,11 @@ public class ResultManager : MonoBehaviour {
         nextBlinkTime = Time.time + blinkInterval;
     }
 
-    void Update() {
+    void Update() {      
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();  // ESCキーでアプリ終了
+        }
         HandleBlinking(); // "PRESS START KEY"の明滅制御
         HandleSceneTransition(); // シーン遷移の制御
     }

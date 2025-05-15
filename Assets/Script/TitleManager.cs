@@ -39,6 +39,10 @@ public class TitleScreenController : MonoBehaviour {
     }
 
     void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();  // ESCキーでアプリ終了
+        }
         switch (currentState) {
             case TitleState.MovingTitle:
                 HandleTitleMovement();
