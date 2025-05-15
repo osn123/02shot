@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
 
     // 状態管理
     public static bool isDead = false;     // プレイヤー死亡フラグ
-    private bool isResultScreen = false;   // リザルト画面表示中フラグ
+    //private bool isResultScreen = false;   // リザルト画面表示中フラグ
 
     // リザルト画面UI
     public GameObject resultPanel;         // リザルトパネル
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
-        if (isResultScreen) {
+        if (GameManager.Instance.isResultScreen) {
             HandleBlinking(); // 明滅処理を実行
             HandleRestart();  // リスタート処理を実行
             return;
@@ -96,30 +96,18 @@ public class Player : MonoBehaviour {
         if (!isDead && collision.CompareTag("Enemy")) // プレイヤーが死亡しておらず、敵と衝突した場合
         {
             audioSource.PlayOneShot(playerHitClip); // プレイヤー撃破SEを再生
-            StartCoroutine(HandleDeath()); // 死亡処理をコルーチンで実行
+            HandleDeath(); // 死亡処理
         }
     }
 
-    private IEnumerator HandleDeath() {
+    private void HandleDeath() {
         // 爆発エフェクトを生成
         Instantiate(explosionPrefab,transform.position,Quaternion.identity);
 
         isDead = true; // 死亡フラグを立てる
         gameObject.GetComponent<SpriteRenderer>().enabled = false; // スプライトレンダラーを非表示にする
-        // 爆発エフェクト終了後30フレーム待機
-        yield return new WaitForSeconds(30f / 60f); // 30フレーム分の時間を待機
-        GameManager.Instance.audioSource.enabled = false; //// TODO: AudioSourceを無効化
-        yield return new WaitForSeconds(1f); // 1秒待機
 
-        resultPanel.SetActive(true); // リザルト画面を表示
-        GameManager.Instance.scoreText21.text = "あなたの獲得スコアは: " ; // スコアをテキストに反映
-        GameManager.Instance.scoreText21.enabled = true;
-
-        yield return new WaitForSeconds(1f); // 1秒待機
-        GameManager.Instance.scoreText22.text = GameManager.Instance.GetScore() + "点"; // スコアをテキストに反映
-        GameManager.Instance.scoreText22.enabled = true;
-
-        isResultScreen = true; // 
+        StartCoroutine(GameManager.Instance.OnGameOver());
 
     }
 

@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
     // シングルトン
     public static GameManager Instance; // シングルトンインスタンス
 
+    public GameObject resultPanel;         // リザルトパネル
+    public bool isResultScreen = false;   // リザルト画面表示中フラグ
+
+
+
     void Awake()
     {
         // シングルトンの初期化
