@@ -51,9 +51,6 @@ public class GameManager : MonoBehaviour
         backgroundHeight = background1.GetComponentInChildren<SpriteRenderer>().bounds.size.y * 4; // TODO: 1枚目の背景の高さを取得し、4倍する
         audioSource = GetComponent<AudioSource>(); // AudioSourceコンポーネントを取得
         PlayBGM(); // BGMを再生
-        //UNDONE
-        //HACK
-
     }
 
     [SerializeField] private GameObject enemyPrefab; // 敵のプレハブ

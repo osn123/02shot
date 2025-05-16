@@ -910,7 +910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1979840439063376861, guid: bf7c448a7b1a4654caf7195cb185e57b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 193.19
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3398991783730480889, guid: bf7c448a7b1a4654caf7195cb185e57b, type: 3}
       propertyPath: m_Name
@@ -1058,8 +1058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120.46265, y: 103.53432}
-  m_SizeDelta: {x: 759.0747, y: 207.4086}
+  m_AnchoredPosition: {x: -150, y: 100}
+  m_SizeDelta: {x: 800, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1130190004
 MonoBehaviour:
@@ -1420,6 +1420,8 @@ MonoBehaviour:
   bgmClip: {fileID: 8300000, guid: 9453a6dad89146b47973bdd155709726, type: 3}
   audioSource: {fileID: 0}
   enemyHitClip: {fileID: 8300000, guid: b529a47f758c18341a76b833d28aab5b, type: 3}
+  resultPanel: {fileID: 1392578283}
+  isResultScreen: 0
   enemyPrefab: {fileID: 7213876630039150376, guid: 783953685d3cc4945bd569a9d303e884, type: 3}
   spawnInterval: 2
 --- !u!4 &1927242364
