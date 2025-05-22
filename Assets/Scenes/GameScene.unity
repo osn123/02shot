@@ -1420,6 +1420,8 @@ MonoBehaviour:
   bgmClip: {fileID: 8300000, guid: 9453a6dad89146b47973bdd155709726, type: 3}
   audioSource: {fileID: 0}
   enemyHitClip: {fileID: 8300000, guid: b529a47f758c18341a76b833d28aab5b, type: 3}
+  resultPanel: {fileID: 1392578283}
+  isResultScreen: 0
   enemyPrefab: {fileID: 7213876630039150376, guid: 783953685d3cc4945bd569a9d303e884, type: 3}
   spawnInterval: 2
 --- !u!4 &1927242364
