@@ -102,7 +102,8 @@ public class Player : MonoBehaviour {
 
     private void HandleDeath() {
         // 爆発エフェクトを生成
-        Instantiate(explosionPrefab,transform.position,Quaternion.identity);
+        GameObject effect = Instantiate(explosionPrefab,transform.position,Quaternion.identity);
+        Destroy(effect, 1f);
 
         isDead = true; // 死亡フラグを立てる
         gameObject.GetComponent<SpriteRenderer>().enabled = false; // スプライトレンダラーを非表示にする

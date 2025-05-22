@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4704d9e73c8e674396c25c1da7c4636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffect: {fileID: 5392249526498066891, guid: ab826a626bffc1843b76247872d1868b, type: 3}
+  explosionEffect: {fileID: 5959888345347015824, guid: f27b8fa0a56793b42a6bc892c5fcb5c1, type: 3}
   enemyShootClip: {fileID: 8300000, guid: b529a47f758c18341a76b833d28aab5b, type: 3}
 --- !u!61 &7523527203114621585
 BoxCollider2D:

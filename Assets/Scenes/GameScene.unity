@@ -223,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   bulletPrefab: {fileID: 2311675023914168887, guid: ca4fe3822f114534e8333197faa8dde7, type: 3}
-  explosionPrefab: {fileID: 5392249526498066891, guid: ab826a626bffc1843b76247872d1868b, type: 3}
+  explosionPrefab: {fileID: 556792322231642232, guid: b61ad23be36da674887af5e1b6057b4a, type: 3}
   playerShootClip: {fileID: 8300000, guid: 759ef352bd34ceb449cb9f1f29fe7e97, type: 3}
   playerHitClip: {fileID: 8300000, guid: b529a47f758c18341a76b833d28aab5b, type: 3}
   resultPanel: {fileID: 1392578283}
@@ -481,8 +481,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 0, y: 300}
+  m_SizeDelta: {x: 320, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &253798841
 MonoBehaviour:
@@ -511,7 +511,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 175
-    m_Alignment: 8
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1262,11 +1262,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 363884509}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 1, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 480, y: 70}
+  m_SizeDelta: {x: 100, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1479906117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 9209989022965713952, guid: f6f585b413c6a9742997af26bf257621, type: 3}
+  m_Sprite: {fileID: -1024601211, guid: cd30ef4185e02b94eb8fb64cd6f91724, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
