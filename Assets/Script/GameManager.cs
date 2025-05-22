@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateScoreText()//todo: 5keta hyouzi
     { // スコア表示を更新するメソッド
-        scoreText.text = score.ToString(); ; // todo: スコアをテキストに反映
+        scoreText.text = score.ToString(); 
         targetText.text = "<sprite=" + score % 10 + ">";
         if (score < 10)
         {
