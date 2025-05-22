@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 // ゲーム全体の管理を行うクラス
 public class GameManager : MonoBehaviour
@@ -18,6 +19,9 @@ public class GameManager : MonoBehaviour
     public Text scoreText21;   // スコアテキストUI
     public Text scoreText22;   // スコアテキストUI
     private int score = 0;   // 現在のスコア
+
+    public TextMeshProUGUI targetText; // インスペクターに表示される
+    public TextMeshProUGUI targetText10; // インスペクターに表示される
 
     // サウンド関連
     public AudioClip bgmClip;        // BGMクリップ
@@ -46,7 +50,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Start()
-    {       
+    {
         // 背景画像の高さを取得
         backgroundHeight = background1.GetComponentInChildren<SpriteRenderer>().bounds.size.y * 4; // TODO: 1枚目の背景の高さを取得し、4倍する
         audioSource = GetComponent<AudioSource>(); // AudioSourceコンポーネントを取得
@@ -136,9 +140,18 @@ public class GameManager : MonoBehaviour
         return score; // スコアを取得するメソッド
     }
 
-    private void UpdateScoreText()
+    private void UpdateScoreText()//todo: 5keta hyouzi
     { // スコア表示を更新するメソッド
-        scoreText.text =  score.ToString(); ; // スコアをテキストに反映
+        scoreText.text = score.ToString(); ; // todo: スコアをテキストに反映
+        targetText.text = "<sprite=" + score % 10 + ">";
+        if (score < 10)
+        {
+            targetText10.text = "";
+        }
+        else
+        {
+            targetText10.text = "<sprite=" + score / 10 + ">";
+        }
     }
 
     public IEnumerator OnGameOver()
