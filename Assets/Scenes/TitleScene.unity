@@ -320,7 +320,6 @@ MonoBehaviour:
   moveSpeed: 3
   targetY: 0
   blinkInterval: 0.5
-  audioSource: {fileID: 0}
   StartClip: {fileID: 8300000, guid: 4811a981ebf2ae7469d9c862d4146355, type: 3}
 --- !u!4 &552615713
 Transform:
@@ -350,7 +349,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c2b3ca76a223b814b9b853e66cd7f726, type: 3}
   m_Resource: {fileID: 8300000, guid: c2b3ca76a223b814b9b853e66cd7f726, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.253
   m_Pitch: 1
   Loop: 0
   Mute: 0

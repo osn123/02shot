@@ -15,8 +15,6 @@ public class ResultManager : MonoBehaviour
 
     void Start()
     {
-        // スコアを取得して表示
-        //scoreText.text = "あなたの獲得スコアは: " + GameManager.Instance.GetScore() + "点"; // スコアをテキストに反映
         scoreText.enabled = false;
         scoreText2.enabled = false;
 
@@ -51,9 +49,8 @@ public class ResultManager : MonoBehaviour
 
     private void HandleSceneTransition()
     {
-        // "START"キーが押されたらタイトルシーンに遷移
         if (Input.GetKeyDown(KeyCode.S))
-        { // Spaceキーを"START"キーとして使用
+        { 
             SceneManager.LoadScene("TitleScene"); // タイトルシーンに遷移
         }
     }
@@ -64,16 +61,10 @@ public class ResultManager : MonoBehaviour
         scoreText.text = "あなたの獲得スコアは: " ; // スコアをテキストに反映
         scoreText.enabled = true;
 
-        //scoreText.text = "あなたの獲得スコアは: " + GameManager.Instance.GetScore() + "点"; // スコアをテキストに反映
         yield return new WaitForSeconds(1); // 
-        //scoreText2.text = GameManager.Instance.GetScore() + "点"; // スコアをテキストに反映
         scoreText2.text = GameManager.Instance.GetScore() + "点"; // スコアをテキストに反映
         scoreText2.enabled = true;
         isShow = true;
-
-        //yield return new WaitForSeconds(1); // 
-        //HandleBlinking(); // "PRESS START KEY"の明滅制御
-        //HandleSceneTransition(); // シーン遷移の制御
 
     }
 

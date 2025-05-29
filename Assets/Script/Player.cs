@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
     // サウンド
     public AudioClip playerShootClip;      // 弾発射音
     public AudioClip playerHitClip;        // 被弾音
+    public AudioClip scoreClip;        // 被弾音
     private AudioSource audioSource;       // オーディオ再生用
 
     // 画面制御
@@ -57,7 +58,6 @@ public class Player : MonoBehaviour {
         if (isDead) {
             return;
         }
-
 
         HandleMovement(); // プレイヤーの移動処理を呼び出す
         HandleShooting(); // プレイヤーの弾発射処理を呼び出す
@@ -109,7 +109,6 @@ public class Player : MonoBehaviour {
         gameObject.GetComponent<SpriteRenderer>().enabled = false; // スプライトレンダラーを非表示にする
 
         StartCoroutine(GameManager.Instance.OnGameOver());
-
     }
 
     private void ShowResultScreen() {

@@ -27,14 +27,13 @@ public class GameManager : MonoBehaviour
     public AudioClip bgmClip;        // BGMクリップ
     public AudioSource audioSource;  // AudioSource
     public AudioClip enemyHitClip;   // 敵撃破SE
+    public AudioClip scoreClip;        // 
 
     // シングルトン
     public static GameManager Instance; // シングルトンインスタンス
 
     public GameObject resultPanel;         // リザルトパネル
     public bool isResultScreen = false;   // リザルト画面表示中フラグ
-
-
 
     void Awake()
     {
@@ -142,7 +141,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateScoreText()//todo: 5keta hyouzi
     { // スコア表示を更新するメソッド
-        scoreText.text = score.ToString(); 
+        scoreText.text = score.ToString();
         targetText.text = "<sprite=" + score % 10 + ">";
         if (score < 10)
         {
@@ -158,16 +157,18 @@ public class GameManager : MonoBehaviour
     {
         // 爆発エフェクト終了後30フレーム待機
         yield return new WaitForSeconds(30f / 60f); // 30フレーム分の時間を待機
-        audioSource.enabled = false; //// TODO: AudioSourceを無効化
 
         resultPanel.SetActive(true); // リザルト画面を表示
         scoreText21.text = "あなたの獲得スコアは: "; // スコアをテキストに反映
         scoreText21.enabled = true;
+        audioSource.PlayOneShot(scoreClip); // SEを再生
 
         yield return new WaitForSeconds(1f); // 1秒待機
         scoreText22.text = GetScore() + "点"; // スコアをテキストに反映
         scoreText22.enabled = true;
+        audioSource.PlayOneShot(scoreClip); // SEを再生
 
+        audioSource.enabled = false; //// TODO: AudioSourceを無効化
         isResultScreen = true; // 
     }
 }

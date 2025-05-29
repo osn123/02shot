@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class TitleScreenController : MonoBehaviour {
     public GameObject titleImage; // タイトル画像のGameObject
@@ -15,8 +13,6 @@ public class TitleScreenController : MonoBehaviour {
 
     private AudioSource audioSource;  // AudioSource
     public AudioClip StartClip;   // 敵撃破SE
-
-
 
     // 内部変数
     private float blinkTimer = 0f;             // 明滅のタイマー

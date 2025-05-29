@@ -226,6 +226,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 556792322231642232, guid: b61ad23be36da674887af5e1b6057b4a, type: 3}
   playerShootClip: {fileID: 8300000, guid: 759ef352bd34ceb449cb9f1f29fe7e97, type: 3}
   playerHitClip: {fileID: 8300000, guid: b529a47f758c18341a76b833d28aab5b, type: 3}
+  scoreClip: {fileID: 0}
   resultPanel: {fileID: 1392578283}
   resultScoreText: {fileID: 2084736161}
   pressStartText: {fileID: 1154072403}
@@ -1696,6 +1697,7 @@ MonoBehaviour:
   bgmClip: {fileID: 8300000, guid: 9453a6dad89146b47973bdd155709726, type: 3}
   audioSource: {fileID: 0}
   enemyHitClip: {fileID: 8300000, guid: b529a47f758c18341a76b833d28aab5b, type: 3}
+  scoreClip: {fileID: 8300000, guid: 1252dcfce08b2084fb645d41814b9bf6, type: 3}
   resultPanel: {fileID: 1392578283}
   isResultScreen: 0
   enemyPrefab: {fileID: 7213876630039150376, guid: 783953685d3cc4945bd569a9d303e884, type: 3}
@@ -1728,7 +1730,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.398
   m_Pitch: 1
   Loop: 0
   Mute: 0
